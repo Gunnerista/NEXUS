@@ -1,0 +1,559 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>NEXUS Platform — Agent-First Transfer Intelligence · L&K Agency</title>
+<style>
+  :root{
+    --bg:#0b1220; --bg-2:#0e1730; --panel:#121d38; --panel-2:#16233f;
+    --line:#243350; --line-soft:#1c2942;
+    --ink:#eef2f8; --ink-dim:#93a1bb; --ink-faint:#65748f;
+    --red:#e0492f; --red-soft:#f06a52; --gold:#e6b34a; --green:#43c78a; --blue:#5b9bff;
+    --hot:#e0492f; --warm:#e6b34a; --dead:#4a5a78; --track:#5b9bff; --resolved:#43c78a;
+  }
+  *{box-sizing:border-box;} html,body{margin:0;padding:0;}
+  body{
+    background:
+      radial-gradient(1200px 600px at 85% -5%, rgba(224,73,47,.10), transparent 60%),
+      radial-gradient(900px 500px at 0% 0%, rgba(91,155,255,.08), transparent 55%),
+      var(--bg);
+    color:var(--ink);
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","Apple SD Gothic Neo",Pretendard,Roboto,sans-serif;
+    line-height:1.5; letter-spacing:.1px; -webkit-font-smoothing:antialiased;
+  }
+  .wrap{max-width:1220px;margin:0 auto;padding:22px 26px 70px;}
+  .topbar{display:flex;justify-content:space-between;align-items:center;padding-bottom:16px;border-bottom:1px solid var(--line);flex-wrap:wrap;gap:10px;}
+  .brand{display:flex;align-items:baseline;gap:12px;}
+  .brand .logo{font-weight:900;font-size:25px;letter-spacing:4px;
+    background:linear-gradient(90deg,#fff,#cfe0ff 60%,#9ab6ff);
+    -webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;}
+  .brand .by{font-size:11px;color:var(--ink-faint);letter-spacing:2px;text-transform:uppercase;}
+  .topbar .rt{text-align:right;font-size:11px;color:var(--ink-dim);letter-spacing:1.5px;text-transform:uppercase;}
+  .topbar .rt b{color:var(--gold);}
+  .internal-badge{display:inline-block;background:rgba(91,155,255,.13);border:1px solid rgba(91,155,255,.4);color:var(--blue);font-size:10px;font-weight:900;letter-spacing:2px;padding:3px 10px;border-radius:999px;text-transform:uppercase;margin-left:10px;vertical-align:middle;}
+
+  .tabs{display:flex;gap:8px;margin:18px 0 22px;flex-wrap:wrap;}
+  .tab{background:var(--panel);border:1px solid var(--line);border-radius:999px;padding:8px 18px;font-size:12.5px;font-weight:800;letter-spacing:.5px;color:var(--ink-dim);cursor:pointer;transition:all .15s;}
+  .tab:hover{color:var(--ink);border-color:#31456b;}
+  .tab.active{background:linear-gradient(90deg,rgba(224,73,47,.22),rgba(224,73,47,.08));border-color:rgba(224,73,47,.55);color:#fff;}
+  .tab .cnt{font-size:10px;color:var(--gold);margin-left:6px;font-weight:900;}
+  .view{display:none;} .view.active{display:block;animation:fade .25s ease;}
+  @keyframes fade{from{opacity:0;transform:translateY(4px);}to{opacity:1;transform:none;}}
+
+  .kicker{color:var(--red-soft);font-size:11px;font-weight:800;letter-spacing:3px;text-transform:uppercase;margin:0 0 10px;}
+  h1.big{margin:0;font-size:38px;line-height:1.05;font-weight:900;letter-spacing:-.5px;text-transform:uppercase;}
+  h1.big .accent{color:var(--red);}
+  .lede{color:var(--ink-dim);font-size:14px;max-width:720px;margin:12px 0 0;}
+
+  .tiles{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px;margin:24px 0;}
+  .tile{background:linear-gradient(180deg,var(--panel-2),var(--panel));border:1px solid var(--line);border-radius:14px;padding:16px 18px;}
+  .tile .k{font-size:10px;color:var(--ink-faint);letter-spacing:1.5px;text-transform:uppercase;font-weight:800;}
+  .tile .v{font-size:30px;font-weight:900;margin-top:4px;letter-spacing:-.5px;}
+  .tile .v small{font-size:13px;color:var(--ink-dim);font-weight:700;}
+  .tile .s{font-size:11px;color:var(--ink-dim);margin-top:3px;}
+  .tile.hl .v{color:var(--gold);} .tile.red .v{color:var(--red-soft);} .tile.grn .v{color:var(--green);}
+
+  .panel{background:var(--panel);border:1px solid var(--line-soft);border-radius:14px;padding:18px 20px;margin-bottom:16px;}
+  .panel h3{margin:0 0 10px;font-size:15px;font-weight:900;letter-spacing:-.2px;}
+  .panel h3 .tag{font-size:10px;color:var(--gold);letter-spacing:1.5px;text-transform:uppercase;margin-left:8px;}
+  .note-line{font-size:11px;color:var(--ink-faint);}
+
+  .verdict{background:linear-gradient(90deg,rgba(224,73,47,.14),rgba(224,73,47,.02));border:1px solid rgba(224,73,47,.4);border-left:3px solid var(--red);border-radius:12px;padding:14px 16px;margin-bottom:18px;}
+  .verdict .vt{font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--red-soft);font-weight:900;margin-bottom:5px;}
+  .verdict p{margin:0;font-size:13.5px;} .verdict b{color:var(--gold);}
+
+  .st{font-size:10px;font-weight:900;letter-spacing:1px;padding:3px 9px;border-radius:6px;text-transform:uppercase;display:inline-block;}
+  .st.hot{background:rgba(224,73,47,.16);color:var(--red-soft);border:1px solid rgba(224,73,47,.4);}
+  .st.warm{background:rgba(230,179,74,.12);color:var(--gold);border:1px solid rgba(230,179,74,.3);}
+  .st.dead{background:rgba(74,90,120,.18);color:#8fa0be;border:1px solid rgba(74,90,120,.5);}
+  .st.track{background:rgba(91,155,255,.13);color:var(--blue);border:1px solid rgba(91,155,255,.35);}
+  .st.resolved{background:rgba(67,199,138,.13);color:var(--green);border:1px solid rgba(67,199,138,.35);}
+  .chip{font-size:10.5px;font-weight:700;padding:3px 8px;border-radius:6px;background:var(--bg-2);color:var(--ink-dim);border:1px solid var(--line-soft);display:inline-block;margin:2px 3px 2px 0;}
+  .chip.key{background:rgba(67,199,138,.12);color:var(--green);border-color:rgba(67,199,138,.28);}
+  .chip.flag{background:rgba(230,179,74,.1);color:var(--gold);border-color:rgba(230,179,74,.25);}
+  .chip.alert{background:rgba(224,73,47,.1);color:var(--red-soft);border-color:rgba(224,73,47,.3);}
+
+  .filters{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:16px;align-items:center;}
+  .fchip{background:var(--bg-2);border:1px solid var(--line-soft);border-radius:999px;padding:6px 14px;font-size:11.5px;font-weight:800;color:var(--ink-dim);cursor:pointer;transition:all .15s;}
+  .fchip:hover{color:var(--ink);border-color:#31456b;}
+  .fchip.on{background:rgba(91,155,255,.15);border-color:rgba(91,155,255,.5);color:#cfe0ff;}
+  .fchip.on.hotonly{background:rgba(224,73,47,.15);border-color:rgba(224,73,47,.5);color:var(--red-soft);}
+  .asof{margin-left:auto;font-size:10.5px;color:var(--ink-faint);letter-spacing:1px;text-transform:uppercase;}
+  .lg-head{display:flex;align-items:center;gap:12px;margin:0 0 4px;flex-wrap:wrap;}
+  .lg-head h3{margin:0;font-size:16px;font-weight:900;}
+  .lg-head .win{font-size:11px;color:var(--ink-dim);}
+  .lg-head .win b{color:var(--gold);}
+  .lg-rule{font-size:11px;color:var(--ink-faint);margin:2px 0 12px;}
+  .club-row{display:flex;align-items:flex-start;gap:12px;background:var(--bg-2);border:1px solid var(--line-soft);border-radius:11px;padding:11px 13px;margin-bottom:8px;transition:border-color .15s;}
+  .club-row:hover{border-color:#31456b;}
+  .club-row .nm{font-size:13.5px;font-weight:800;min-width:170px;}
+  .club-row .nm small{display:block;font-size:10.5px;color:var(--ink-faint);font-weight:600;}
+  .club-row .why{flex:1;font-size:12px;color:var(--ink-dim);}
+  .club-row .stcol{flex:none;}
+  .empty-msg{color:var(--ink-faint);font-size:12.5px;padding:12px 4px;}
+
+  .tier{margin-bottom:20px;}
+  .tier-h{display:flex;align-items:center;gap:10px;margin:0 0 11px;flex-wrap:wrap;}
+  .tier-h .dot{width:9px;height:9px;border-radius:3px;}
+  .tier-h .tn{font-size:12px;font-weight:900;letter-spacing:1.5px;text-transform:uppercase;}
+  .tier-h .td{font-size:11.5px;color:var(--ink-dim);}
+  .club{display:flex;align-items:center;gap:14px;background:var(--panel);border:1px solid var(--line-soft);border-radius:12px;padding:12px 14px;margin-bottom:9px;transition:border-color .15s,transform .15s;}
+  .club:hover{border-color:var(--line);transform:translateX(2px);}
+  .rank{font-size:12px;font-weight:900;color:var(--ink-faint);width:24px;text-align:center;flex:none;}
+  .gauge{--v:90;--c:var(--gold);width:46px;height:46px;flex:none;border-radius:50%;
+    background:conic-gradient(var(--c) calc(var(--v)*1%), #1a2740 0);display:flex;align-items:center;justify-content:center;position:relative;}
+  .gauge::before{content:"";position:absolute;inset:4px;border-radius:50%;background:var(--panel);}
+  .gauge b{position:relative;font-size:14px;font-weight:900;}
+  .cbody{flex:1;min-width:0;}
+  .cbody .cn{font-size:14.5px;font-weight:800;}
+  .cbody .cl{font-size:11px;color:var(--ink-dim);margin-top:1px;}
+  .chips{display:flex;flex-wrap:wrap;gap:5px;margin-top:7px;}
+
+  .fa-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(340px,1fr));gap:14px;}
+  .fa-card{background:linear-gradient(180deg,var(--panel-2),var(--panel));border:1px solid var(--line);border-radius:14px;padding:16px;display:flex;flex-direction:column;gap:10px;}
+  .fa-top{display:flex;justify-content:space-between;align-items:flex-start;gap:10px;}
+  .fa-top h4{margin:0;font-size:15.5px;font-weight:900;}
+  .fa-top .meta{font-size:11px;color:var(--ink-dim);margin-top:2px;}
+  .fa-sec .lb{font-size:9.5px;letter-spacing:1.5px;text-transform:uppercase;color:var(--ink-faint);font-weight:800;margin-bottom:4px;}
+  .pred{background:var(--bg-2);border:1px solid var(--line-soft);border-radius:10px;padding:10px 12px;}
+  .pred .p-league{font-size:12.5px;font-weight:800;color:var(--blue);}
+  .pred ol{margin:6px 0 0;padding-left:18px;font-size:12px;color:var(--ink-dim);}
+  .pred ol li{margin-bottom:2px;} .pred ol li b{color:var(--ink);}
+  .fa-outcome{border-radius:10px;padding:10px 12px;font-size:12px;}
+  .fa-outcome.ok{background:rgba(67,199,138,.09);border:1px solid rgba(67,199,138,.3);}
+  .fa-outcome.part{background:rgba(230,179,74,.08);border:1px solid rgba(230,179,74,.3);}
+  .fa-outcome b{color:var(--green);} .fa-outcome.part b{color:var(--gold);}
+  .fa-foot{display:flex;justify-content:space-between;align-items:center;font-size:10.5px;color:var(--ink-faint);}
+
+  .rubric{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:10px;margin:14px 0 20px;}
+  .rub{background:var(--bg-2);border:1px solid var(--line-soft);border-radius:10px;padding:12px 14px;}
+  .rub .pts{font-size:20px;font-weight:900;}
+  .rub .nm2{font-size:12px;font-weight:800;margin-top:2px;}
+  .rub .ds{font-size:11px;color:var(--ink-dim);margin-top:2px;}
+  .accbar-row{display:flex;align-items:center;gap:12px;margin-bottom:10px;}
+  .accbar-row .lbl{width:150px;font-size:12px;color:var(--ink-dim);text-align:right;flex:none;}
+  .accbar{flex:1;height:18px;background:var(--bg-2);border-radius:4px;overflow:hidden;position:relative;}
+  .accbar span{display:block;height:100%;border-radius:0 4px 4px 0;}
+  .accbar-row .val{width:60px;font-size:12px;font-weight:800;flex:none;}
+  .hero-num{display:flex;align-items:baseline;gap:14px;margin:6px 0 2px;}
+  .hero-num .n{font-size:52px;font-weight:900;letter-spacing:-2px;color:var(--gold);}
+  .hero-num .d{font-size:13px;color:var(--ink-dim);max-width:420px;}
+
+  .conf{margin-top:26px;display:flex;align-items:center;gap:12px;background:linear-gradient(90deg,rgba(91,155,255,.08),transparent);border:1px dashed var(--line);border-radius:12px;padding:13px 16px;}
+  .conf .ct{font-size:11.5px;color:var(--ink-dim);} .conf .ct b{color:var(--ink);}
+  footer{margin-top:28px;padding-top:16px;border-top:1px solid var(--line);display:flex;justify-content:space-between;align-items:center;font-size:11px;color:var(--ink-faint);flex-wrap:wrap;gap:8px;}
+  footer .lg{font-weight:900;letter-spacing:3px;color:var(--ink-dim);}
+  .tooltip{position:fixed;pointer-events:none;background:#0a101f;border:1px solid var(--line);border-radius:8px;padding:8px 11px;font-size:11.5px;color:var(--ink);z-index:99;display:none;max-width:280px;box-shadow:0 8px 24px rgba(0,0,0,.5);}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <div class="topbar">
+    <div class="brand">
+      <span class="logo">NEXUS</span>
+      <span class="by">Agent-First Transfer Platform · L&K Agency</span>
+      <span class="internal-badge">Showcase</span>
+    </div>
+    <div class="rt">Platform v1.0 · <b>Live 2026-08-16</b><br>League Boards · Reverse Match · FA Tracker</div>
+  </div>
+
+  <div class="tabs" id="tabs">
+    <button class="tab active" data-view="overview">Overview</button>
+    <button class="tab" data-view="leagues">League Boards<span class="cnt" id="cnt-lg"></span></button>
+    <button class="tab" data-view="case">Case #001</button>
+    <button class="tab" data-view="tracker">FA Tracker<span class="cnt" id="cnt-fa"></span></button>
+    <button class="tab" data-view="accuracy">Accuracy</button>
+  </div>
+
+  <!-- OVERVIEW -->
+  <div class="view active" id="view-overview">
+    <p class="kicker">Transfer Market Intelligence</p>
+    <h1 class="big">Market in.<br><span class="accent">Decisions out.</span></h1>
+    <p class="lede">NEXUS reads live squad gaps, registration rules, and window deadlines across 15 markets, matches players to the clubs that genuinely need them, and then does something most scouting tools never do: it predicts free agent destinations in advance, locks the prediction, and scores itself when the player actually signs.</p>
+
+    <div class="tiles">
+      <div class="tile red"><div class="k">Active Case</div><div class="v">#001</div><div class="s">International CB · Asia based</div></div>
+      <div class="tile"><div class="k">Markets Scanned</div><div class="v">15</div><div class="s">League boards · scanned 2026-08-06</div></div>
+      <div class="tile hl"><div class="k">Live Targets</div><div class="v" id="tile-hot">—</div><div class="s">Clubs with verified demand</div></div>
+      <div class="tile"><div class="k">FA Pool Tracked</div><div class="v" id="tile-fa">—</div><div class="s">Predictions locked 2026-08-16</div></div>
+      <div class="tile grn"><div class="k">Calibration Score</div><div class="v" id="tile-acc">—</div><div class="s">Resolved cases graded</div></div>
+    </div>
+
+    <div class="verdict">
+      <div class="vt">Sample Market Intel · 2026-08-16</div>
+      <p><b>Aris Thessaloniki lost both of its centre back candidates in one week</b> — one hijacked by a Cypriot club at the medical stage (Aug 11), the other drawn to the Gulf. A month-old left footed CB brief remains unfilled with a cup registration deadline days away. NEXUS flags exactly this kind of window: verified demand, broken pipeline, urgent clock.</p>
+    </div>
+
+    <div class="panel">
+      <h3>Deadline Radar<span class="tag">Window close</span></h3>
+      <div id="deadline-bars"></div>
+      <p class="note-line">Bars = days remaining from 2026-08-16 until each league's transfer window closes. Shorter = more urgent.</p>
+    </div>
+  </div>
+
+  <!-- LEAGUE BOARDS -->
+  <div class="view" id="view-leagues">
+    <p class="kicker">League Boards</p>
+    <h1 class="big" style="font-size:28px;">Demand by league</h1>
+    <p class="lede">Pick a league and see only that market: window deadline, registration rules, and which clubs have a verified open need right now — built from local press in eight languages, updated on a dated scan cycle.</p>
+    <div class="filters" id="league-filters"></div>
+    <div class="filters">
+      <button class="fchip hotonly" id="hot-toggle">🔥 HOT only</button>
+      <span class="asof">Scan as of 2026-08-06 · Intel patch 2026-08-16</span>
+    </div>
+    <div id="league-boards"></div>
+  </div>
+
+  <!-- CASE #001 -->
+  <div class="view" id="view-case">
+    <p class="kicker">Reverse Match · Case #001</p>
+    <h1 class="big" style="font-size:28px;">Player in. <span class="accent">Destinations out.</span></h1>
+    <p class="lede">Case #001: an Asia based international centre back (left footed, national team starter at the 2026 World Cup) with a six figure release clause and an efficient wage ask. NEXUS inverted the usual logic: with the fee this affordable, the binding filter is not budget — it is which clubs have a genuine, current gap and the will to move this window. Club identities below are anonymized while the deal is live.</p>
+    <div class="verdict" style="margin-top:16px;">
+      <div class="vt">How the ranking works</div>
+      <p>Three axes, in strict priority order: <b>league level and guaranteed minutes</b>, then <b>budget and wage fit</b>, then <b>position and squad gap verified against this week's news</b>. A club must clear all three. Every claim that could not be verified live carries an explicit Verify flag instead of being asserted.</p>
+    </div>
+    <div id="case-tiers"></div>
+  </div>
+
+  <!-- FA TRACKER -->
+  <div class="view" id="view-tracker">
+    <p class="kicker">FA Prediction Tracker</p>
+    <h1 class="big" style="font-size:28px;">Predict. Lock. <span class="accent">Score.</span></h1>
+    <p class="lede">For a pool of currently unattached free agents, NEXUS predicts the destination league and top three clubs — then locks the prediction (2026-08-16). When the player actually signs, the system grades itself: 3 points for the exact club, 2 for the right league, 1 for an adjacent market, 0 for a miss. Predictions are never edited after lock.</p>
+    <div class="filters" style="margin-top:16px;">
+      <button class="fchip on" data-fafilter="all">All</button>
+      <button class="fchip" data-fafilter="TRACKING">Tracking</button>
+      <button class="fchip" data-fafilter="RESOLVED">Resolved</button>
+      <span class="asof">Prediction lock 2026-08-16 · weekly auto scan</span>
+    </div>
+    <div class="fa-grid" id="fa-grid"></div>
+  </div>
+
+  <!-- ACCURACY -->
+  <div class="view" id="view-accuracy">
+    <p class="kicker">System Accuracy</p>
+    <h1 class="big" style="font-size:28px;">The scoreboard</h1>
+    <p class="lede">Only resolved cases count. Predictions are locked before resolution and never retro edited — otherwise accuracy means nothing. Two calibration cases below were graded against signal reads dated before the players signed.</p>
+
+    <div class="rubric">
+      <div class="rub"><div class="pts" style="color:var(--green)">3 pts</div><div class="nm2">Club Hit</div><div class="ds">Actual club was in the predicted top 3</div></div>
+      <div class="rub"><div class="pts" style="color:var(--blue)">2 pts</div><div class="nm2">League Hit</div><div class="ds">Right league, different club</div></div>
+      <div class="rub"><div class="pts" style="color:var(--gold)">1 pt</div><div class="nm2">Adjacent</div><div class="ds">Same tier or neighbouring market</div></div>
+      <div class="rub"><div class="pts" style="color:var(--ink-faint)">0 pts</div><div class="nm2">Miss</div><div class="ds">Different market entirely</div></div>
+    </div>
+
+    <div class="panel">
+      <h3>Calibration Score<span class="tag">Resolved cases</span></h3>
+      <div class="hero-num"><span class="n" id="acc-pct">—</span><span class="d">Average score rate across resolved cases (points earned / points possible). As the sample grows, this number becomes the system's credibility.</span></div>
+      <div id="acc-bars" style="margin-top:16px;"></div>
+    </div>
+
+    <div class="panel">
+      <h3>Resolved Log</h3>
+      <div id="resolved-log"></div>
+    </div>
+
+    <div class="panel">
+      <h3>The loop</h3>
+      <p style="font-size:12.5px;color:var(--ink-dim);margin:0;">A weekly automated scan checks signing news for every tracked free agent → resolves and grades → updates this board. The lock rule is absolute: once a prediction is locked, changing it is forbidden even when new signals appear. New information feeds the next prediction, not the old one.</p>
+    </div>
+  </div>
+
+  <div class="conf">
+    <span style="font-size:18px;">🔒</span>
+    <div class="ct"><b>Proprietary engine.</b> Data sources, scoring weights, and the filter pipeline are L&K Agency intellectual property. This showcase displays match results and reasoning only. Club identities in live deal cases are anonymized.</div>
+  </div>
+
+  <footer>
+    <span class="lg">NEXUS</span>
+    <span>Platform v1.0 · Designed & operated by Ikjun Jang · © 2026 L&K Agency</span>
+  </footer>
+</div>
+<div class="tooltip" id="tooltip"></div>
+<script>
+const TODAY = new Date(2026, 7, 16);
+
+const LEAGUES = [
+ {id:"tr", name:"Türkiye Süper Lig / 1.Lig", close:"2026-09-04", rule:"14 foreign players (10 standard + 4 born 2004 or later)", clubs:[
+   {n:"Gaziantep FK", d:"Süper Lig", s:"HOT", w:"Left footed CB signing collapsed at the signature stage Aug 2–5; club officially pivoted to alternative candidates. Season opener imminent.", v:"foreign slot count"},
+   {n:"Kocaelispor", d:"Süper Lig", s:"HOT", w:"Hunting one or two CBs; a 29 year old on the list signals age tolerance. Shopping in loan and mid six figure buyout range.", v:""},
+   {n:"Samsunspor", d:"Süper Lig", s:"WARM", w:"Lost both starting CBs; closing a €3M deal for a 22 year old — resale model, veteran fits only as third CB.", v:""},
+   {n:"Gençlerbirliği", d:"Süper Lig", s:"WARM", w:"Rotation CB slot open but stated preference is a domestic signing.", v:""},
+   {n:"Antalyaspor", d:"1.Lig", s:"DEAD", w:"Only two available CBs but under a FIFA registration embargo — cannot register anyone until lifted.", v:""},
+   {n:"Çorum FK", d:"Süper Lig", s:"DEAD", w:"Signed a 24 year old ex Eredivisie CB on Aug 3–4. Need closed.", v:""},
+   {n:"Konyaspor", d:"Süper Lig", s:"DEAD", w:"Signed an ex Ligue 1 CB (~€500K) around Jul 30. Need closed.", v:""}
+ ]},
+ {id:"gr", name:"Greece Super League", close:"2026-09-15", rule:"7 non EU (23+) registered · 5 on the field", clubs:[
+   {n:"Aris Thessaloniki", d:"Super League", s:"HOT", w:"Left footed CB brief unfilled for a month. Lost both lead candidates in one week (one hijacked at the medical, one to the Gulf). Cup registration deadline Aug 17–19.", v:"non EU slots"},
+   {n:"OFI Crete", d:"Super League", s:"DEAD", w:"Filled the exact left footed CB slot via a Serie B loan on Jul 27.", v:""},
+   {n:"Atromitos", d:"Super League", s:"DEAD", w:"Signed its left footed CB to 2028 on Jul 14.", v:""}
+ ]},
+ {id:"pl", name:"Poland Ekstraklasa", close:"2026-09-09", rule:"Unlimited non EU", clubs:[
+   {n:"Raków Częstochowa", d:"Ekstraklasa", s:"HOT", w:"Confirmed Aug 4: still wants a CB plus a fullback. Concrete offer out for a Primeira Liga CB — competitive track, shopping at the €800K level.", v:""},
+   {n:"Legia Warsaw", d:"Ekstraklasa", s:"WARM", w:"Sporting director line searching for a CB; head coach publicly cooled it. Real but political.", v:""},
+   {n:"Pogoń Szczecin", d:"Ekstraklasa", s:"DEAD", w:"CB signed permanently Jul 9. January shortlist profile was left footed CBs — refits if reopened.", v:""}
+ ]},
+ {id:"bg", name:"Bulgaria First League", close:"2026-09-10", rule:"No effective non EU cap", clubs:[
+   {n:"Levski Sofia", d:"First League", s:"HOT", w:"In UCL qualifying with a starting CB injured and a month long CB pursuit stalled across three parallel options. A release clause player who can sign this week breaks the logjam.", v:""}
+ ]},
+ {id:"ro", name:"Romania Liga 1", close:"2026-09-08", rule:"No non EU cap (work permit only)", clubs:[
+   {n:"Universitatea Craiova", d:"Liga 1", s:"HOT", w:"Defensive crisis after losing a CB; sent an official offer for a Dinamo Kyiv CB on the morning of Aug 4 and is running multiple CB tracks. Actively spending this week.", v:""}
+ ]},
+ {id:"cy", name:"Cyprus First Division", close:"2026-09-15", rule:"No non EU registration burden", clubs:[
+   {n:"Omonoia Nicosia", d:"First Division", s:"DEAD", w:"Solved its urgent CB need on Aug 11 by hijacking a rival's free agent target at the medical stage.", v:""},
+   {n:"Apollon Limassol", d:"First Division", s:"WARM", w:"June report of a stopper search; no signing confirmed since, but signal is stale.", v:"recent signings"}
+ ]},
+ {id:"rs", name:"Serbia SuperLiga", close:"2026-09-18", rule:"Generous foreign registration", clubs:[
+   {n:"Crvena zvezda", d:"SuperLiga", s:"DEAD", w:"Declared the stopper question solved after a Jul 24 signing; physical template (196cm) also differed.", v:""},
+   {n:"Partizan", d:"SuperLiga", s:"DEAD", w:"Stated priorities are defensive midfield and attack.", v:""}
+ ]},
+ {id:"be", name:"Belgium Pro League", close:"2026-09-01", rule:"Non EU minimum gross salary (~€100K, verify)", clubs:[
+   {n:"Lommel SK", d:"Challenger (CFG)", s:"DEAD", w:"Starting CB ruptured an ACL; signed a free agent replacement Aug 3. Need closed.", v:""},
+   {n:"Club Brugge", d:"Pro League", s:"WARM", w:"CB out with a metatarsal fracture; leadership searching for one or two CBs, but the bar is UCL level — depth buy only.", v:""}
+ ]},
+ {id:"dk", name:"Denmark Superliga", close:"2026-09-01", rule:"Work permit salary test for non EU", clubs:[
+   {n:"FC Midtjylland", d:"Superliga", s:"WARM", w:"Double CB hole (sale + injury) but already bidding for a domestic target.", v:""}
+ ]},
+ {id:"us", name:"MLS (USA)", close:"2026-09-02", rule:"International slot system (per club, tradeable)", clubs:[
+   {n:"Chicago Fire", d:"MLS East", s:"WARM", w:"Starting CB out long term with a serious thigh injury — three healthy senior CBs left; head coach publicly flagged a busy August. Constraint: international slot availability.", v:"intl slot status"}
+ ]},
+ {id:"ae", name:"UAE Pro League", close:"2026-09-30", rule:"Squad of 25 = 15 local + 5 resident + 5 foreign", clubs:[
+   {n:"Al-Wahda", d:"Pro League", s:"WARM", w:"Lost its Serbian defender to a rival and has not replaced him; plays ACL Two this season. The most unexploited defensive gap in the league.", v:"foreign slots"},
+   {n:"Sharjah", d:"Pro League", s:"WARM", w:"Signed a foreign CB in July and slots look full, but a separate CB file remains open — residual appetite for an undercut deal.", v:"slots"},
+   {n:"Shabab Al-Ahli", d:"Pro League", s:"DEAD", w:"CB signed. Proven buyer of Asian market defenders — first probe if the need reopens.", v:""},
+   {n:"Ittihad Kalba", d:"Pro League", s:"WARM", w:"Rumoured to be signing a free agent CB (unofficial). If it collapses, verified demand.", v:"deal status"}
+ ]},
+ {id:"sa", name:"Saudi (SPL + First Division)", close:"2026-09-06", rule:"SPL: 10 foreigners · matchday 8 + 2 U21", clubs:[
+   {n:"Mid/lower SPL + Yelo market", d:"Market level", s:"WARM", w:"Defence led mercato: 9 of the first 25 foreign signings this window were defenders. Fees are no obstacle; no specific open file confirmed — needs targeting.", v:"per club CB files"}
+ ]},
+ {id:"iq", name:"Iraq Stars League", close:"2026-08-31", rule:"Active foreign slot churn", clubs:[
+   {n:"Al-Quwa Al-Jawiya", d:"Stars League", s:"WARM", w:"Champions with AFC duty; last season's foreign CB deal expired and three foreign pros are being released. Fee culture is the doubt — wage only appetite.", v:"fee willingness"}
+ ]},
+ {id:"az", name:"Azerbaijan Premyer Liqa", close:"2026-09-10", rule:"Generous foreign registration", clubs:[
+   {n:"Neftçi Baku", d:"Premyer Liqa", s:"WARM", w:"Wanted two CBs; only one signed. Second target is under contract elsewhere — proof they will negotiate fees.", v:"second deal status"},
+   {n:"Qarabağ", d:"Premyer Liqa", s:"DEAD", w:"CB deal in progress; shops a tier above this range.", v:""}
+ ]},
+ {id:"qa", name:"Qatar Stars League", close:"2026-09-15", rule:"5 foreign on field + youth quota · Arab slot abolished", clubs:[
+   {n:"Whole market", d:"QSL", s:"DEAD", w:"No fee culture for non marquee foreign CBs this window; promoted clubs filled CB slots with free agents. Structurally closed for this profile.", v:""}
+ ]},
+ {id:"nl", name:"Netherlands Eredivisie", close:"2026-09-01", rule:"High non EU salary floor (league indexed)", clubs:[
+   {n:"Whole market", d:"Eredivisie", s:"DEAD", w:"Non EU salary floor sits far above this wage range — structurally impossible.", v:""}
+ ]}
+];
+
+const CASE_TIERS = [
+ {tier:"Tier 1 · Contact now", color:"var(--hot)", desc:"Verified demand + fee capacity + executable inside the window", clubs:[
+   {n:"Greek SL club", l:"Cup registration deadline in days", v:96, chips:[["key","Left footed CB brief unfilled"],["alert","Lost both candidates in one week"],["flag","Verify: non EU slots"]]},
+   {n:"Süper Lig club", l:"Türkiye · season just opened", v:93, chips:[["key","Left footed CB deal collapsed Aug 5"],["","Shops in exactly this fee bracket"],["flag","Verify: foreign slots"]]},
+   {n:"Bulgarian champion", l:"In UCL qualifying", v:90, chips:[["key","CB pursuit stalled a month"],["","Clause deal = instant execution"],["","No non EU cap"]]},
+   {n:"Romanian contender", l:"Liga 1 · European qualifier", v:88, chips:[["key","Actively bidding for CBs this week"],["","Undercuts their current targets"],["","No cap"]]},
+   {n:"Polish contender", l:"Ekstraklasa · window closes Sep 9", v:86, chips:[["key","CB search official"],["","Fee bracket matches the clause"],["flag","Competing offer on the table"]]}
+ ]},
+ {tier:"Tier 2 · Follow up", color:"var(--warm)", desc:"Real demand signal, one condition weaker", clubs:[
+   {n:"Süper Lig club B", l:"Türkiye", v:80, chips:[["","Hunting 1–2 CBs"],["key","Age tolerant recruitment"]]},
+   {n:"UAE club A", l:"Pro League · ACL Two", v:78, chips:[["key","Lost a starting defender, unreplaced"],["flag","Verify: slots"]]},
+   {n:"Azerbaijani club", l:"Premyer Liqa", v:74, chips:[["","Second CB slot open"],["","Fee willingness proven"]]},
+   {n:"UAE club B", l:"Pro League", v:70, chips:[["","One CB file still open"],["flag","Slots likely full"]]},
+   {n:"Belgian top club", l:"Pro League · UCL", v:66, chips:[["","Searching for 1–2 CBs"],["flag","Depth buy only"]]}
+ ]},
+ {tier:"Conditional · Monitor", color:"var(--track)", desc:"Promoted only if a trigger fires", clubs:[
+   {n:"MLS club", l:"Eastern Conference", v:62, chips:[["","Starting CB out long term"],["alert","International slot check first"]]},
+   {n:"Süper Lig club C", l:"Türkiye", v:58, chips:[["","Lost two starting CBs"],["flag","Resale model · veteran off profile"]]},
+   {n:"Iraqi champion", l:"Stars League · AFC duty", v:55, chips:[["","Foreign CB slot expiring"],["flag","Fee culture doubtful"]]}
+ ]}
+];
+
+const FA_POOL = [
+ {n:"Ibrahim Cissé", pos:"CB · 29 · France", last:"Ferencváros (HUN) · expired May 2026", tier:"mid", status:"TRACKING",
+  pl:"UAE Pro League", p:[["Ittihad Kalba","UAE move rumoured Aug 6 (unofficial)"],["Aris Thessaloniki","was one of four CB candidates"],["Other UAE club","strong Gulf demand"]],
+  conf:72, note:"Resolves instantly if the Kalba rumour confirms"},
+ {n:"Bamba Dieng", pos:"CF · 26 · Senegal", last:"Lorient (FRA) · expired Jul 2026", tier:"mid-high", status:"TRACKING",
+  pl:"EFL Championship", p:[["Hull City","talks reported Jul 30"],["Middlesbrough","parallel contact"],["Süper Lig club","abandoned deal could revive"]],
+  conf:55, note:"Turned down bigger Saudi money — England intent"},
+ {n:"Diogo Leite", pos:"CB (left) · 27 · Portugal", last:"Union Berlin (GER) · expired Jun 2026", tier:"high", status:"TRACKING",
+  pl:"Premier League", p:[["Leeds United","reported to be pushing hard"],["Beşiktaş","parallel track"],["Schalke 04","real link despite 2.Bundesliga"]],
+  conf:58, note:"Left footed CB scarcity = fast resolution expected"},
+ {n:"Yves Bissouma", pos:"DM · 29 · Mali", last:"Tottenham (ENG) · expired Jun 2026", tier:"high", status:"TRACKING",
+  pl:"Premier League", p:[["Fulham","training with the squad"],["Benfica","head coach connection"],["Süper Lig club","if he accepts the wage cut"]],
+  conf:52, note:"Off field record suppresses his market"},
+ {n:"Krépin Diatta", pos:"RB/RW · 27 · Senegal", last:"AS Monaco (FRA) · summer 2026", tier:"high", status:"TRACKING",
+  pl:"Premier League", p:[["Everton","in the race per Aug 6 report"],["Marseille","approach confirmed"],["Ipswich Town","competing"]],
+  conf:50, note:"Knee history = medical variable"},
+ {n:"Anthony Martial", pos:"FW · 30 · France", last:"Monterrey (MEX) · terminated Jul 2026", tier:"high", status:"TRACKING",
+  pl:"La Liga", p:[["Real Betis","back on their radar"],["Ligue 1 mid table","homecoming narrative"],["MLS club","wildcard"]],
+  conf:48, note:"Attitude and injury discount priced in"},
+ {n:"Jarosław Niezgoda", pos:"ST · 31 · Poland", last:"Pogoń Siedlce (POL 2) · expired Jun 2026", tier:"low", status:"TRACKING",
+  pl:"Poland (1st/2nd tier)", p:[["Remains unsigned at window close","zero goals since ACL = weakest signals in pool"],["1 Liga club","low cost gamble demand"],["Bottom half Ekstraklasa","name value bet"]],
+  conf:60, note:"Control case — a negative prediction"},
+ {n:"Ryotaro Ito", pos:"AM · 28 · Japan", last:"Sint-Truiden (BEL) · left Jun 2026", tier:"mid", status:"TRACKING",
+  pl:"J1 League", p:[["Urawa Reds","former club, waiting on offers per press"],["Albirex Niigata","homecoming story"],["Belgian mid table","if he stays in Europe"]],
+  conf:65, note:"Registration window timing is the variable"},
+ {n:"Franck Kessié", pos:"CM · 29 · Côte d'Ivoire", last:"Al-Ahli (KSA) · expired summer 2026", tier:"high", status:"TRACKING",
+  pl:"Saudi Pro League", p:[["Al-Ahli return","re-engaged after failing to replace him"],["Juventus","if the offer improves"],["Other SPL club","money game"]],
+  conf:62, note:"Juventus's speed is the swing factor"},
+ {n:"Fabinho", pos:"DM · 32 · Brazil", last:"Al-Ittihad (KSA) · expired summer 2026", tier:"high", status:"TRACKING",
+  pl:"Brazil Série A", p:[["Cruzeiro","inquiry confirmed, wage gap the issue"],["Gulf club","wildcard second contract"],["AS Monaco","hinted at a former club return"]],
+  conf:45, note:"The wage gap is the whole story"},
+ {n:"Ľubomír Šatka", pos:"CB · 30 · Slovakia", last:"Samsunspor (TUR) · expired Jun 2026", tier:"mid", status:"RESOLVED",
+  pl:"Greece Super League", p:[["Aris Thessaloniki","personal terms reported Jul 30"],["Other Greek SL","market fit"],["Cypriot top club","adjacent market"]],
+  conf:70, actual:"Omonoia Nicosia (Cyprus) · signed 2026-08-11", score:1, scoreLabel:"Adjacent · neighbouring market (P3 direction)",
+  note:"Calibration: hijacked at the medical stage"},
+ {n:"Shawn Adewoye", pos:"CB · 26 · Belgium", last:"Fortuna Sittard (NED) · expired 2026", tier:"mid", status:"RESOLVED",
+  pl:"Belgium", p:[["Lommel SK","talks confirmed Jul 30"],["Other Belgian club","market fit"],["Eredivisie return","backup scenario"]],
+  conf:75, actual:"Lommel SK (Belgium) · signed 2026-08-03", score:3, scoreLabel:"Club Hit · P1 exactly right",
+  note:"Calibration: caught at the negotiation stage by the wildcard scan"}
+];
+
+function el(html){const t=document.createElement('template');t.innerHTML=html.trim();return t.content.firstChild;}
+const stLabel={HOT:"hot",WARM:"warm",DEAD:"dead",TRACKING:"track",RESOLVED:"resolved"};
+
+document.querySelectorAll('.tab').forEach(t=>t.addEventListener('click',()=>{
+  document.querySelectorAll('.tab').forEach(x=>x.classList.remove('active'));
+  document.querySelectorAll('.view').forEach(x=>x.classList.remove('active'));
+  t.classList.add('active');
+  document.getElementById('view-'+t.dataset.view).classList.add('active');
+}));
+
+const allClubs=LEAGUES.flatMap(l=>l.clubs);
+const liveCnt=allClubs.filter(c=>c.s==="HOT"||c.s==="WARM").length;
+document.getElementById('tile-hot').textContent=liveCnt;
+document.getElementById('tile-fa').textContent=FA_POOL.length;
+const resolved=FA_POOL.filter(f=>f.status==="RESOLVED");
+const gained=resolved.reduce((a,f)=>a+f.score,0);
+document.getElementById('tile-acc').innerHTML=gained+"<small>/"+(resolved.length*3)+"pt</small>";
+document.getElementById('cnt-lg').textContent=LEAGUES.length;
+document.getElementById('cnt-fa').textContent=FA_POOL.length;
+
+(function(){
+  const host=document.getElementById('deadline-bars');
+  const rows=LEAGUES.map(l=>({name:l.name.split(" (")[0], close:l.close,
+    days:Math.round((new Date(l.close)-TODAY)/86400000)}))
+    .filter(r=>r.days>=0).sort((a,b)=>a.days-b.days);
+  const max=Math.max(...rows.map(r=>r.days));
+  rows.forEach(r=>{
+    const urgent=r.days<=16;
+    host.appendChild(el(`<div class="accbar-row" data-tip="${r.name} · window closes ${r.close} · D-${r.days}">
+      <span class="lbl">${r.name}</span>
+      <span class="accbar"><span style="width:${Math.max(4,r.days/max*100)}%;background:${urgent?'linear-gradient(90deg,var(--red),var(--red-soft))':'linear-gradient(90deg,#2c4a86,var(--blue))'}"></span></span>
+      <span class="val" style="color:${urgent?'var(--red-soft)':'var(--ink-dim)'}">D-${r.days}</span></div>`));
+  });
+})();
+
+const lgFilters=document.getElementById('league-filters');
+lgFilters.appendChild(el(`<button class="fchip on" data-lg="all">All leagues</button>`));
+LEAGUES.forEach(l=>lgFilters.appendChild(el(`<button class="fchip" data-lg="${l.id}">${l.id==='us'?'MLS':l.name.split(" ")[0]}</button>`)));
+let curLg="all", hotOnly=false;
+lgFilters.addEventListener('click',e=>{
+  const b=e.target.closest('.fchip'); if(!b)return;
+  lgFilters.querySelectorAll('.fchip').forEach(x=>x.classList.remove('on'));
+  b.classList.add('on'); curLg=b.dataset.lg; renderLeagues();
+});
+document.getElementById('hot-toggle').addEventListener('click',e=>{
+  hotOnly=!hotOnly; e.target.classList.toggle('on',hotOnly); renderLeagues();
+});
+function renderLeagues(){
+  const host=document.getElementById('league-boards'); host.innerHTML="";
+  LEAGUES.filter(l=>curLg==="all"||l.id===curLg).forEach(l=>{
+    const days=Math.round((new Date(l.close)-TODAY)/86400000);
+    const clubs=l.clubs.filter(c=>!hotOnly||c.s==="HOT");
+    if(hotOnly&&clubs.length===0)return;
+    const p=el(`<div class="panel">
+      <div class="lg-head"><h3>${l.name}</h3>
+        <span class="win">Window closes <b>${l.close}${days>=0?' (D-'+days+')':' (closed)'}</b></span></div>
+      <div class="lg-rule">Registration rules: ${l.rule}</div>
+      <div class="cl-list"></div></div>`);
+    const list=p.querySelector('.cl-list');
+    if(clubs.length===0){list.appendChild(el(`<div class="empty-msg">Nothing to show</div>`));}
+    clubs.forEach(c=>{
+      list.appendChild(el(`<div class="club-row">
+        <div class="nm">${c.n}<small>${c.d}</small></div>
+        <div class="why">${c.w}${c.v?` <span class="chip flag">Verify: ${c.v}</span>`:""}</div>
+        <div class="stcol"><span class="st ${stLabel[c.s]}">${c.s}</span></div></div>`));
+    });
+    host.appendChild(p);
+  });
+}
+renderLeagues();
+
+(function(){
+  const host=document.getElementById('case-tiers');
+  CASE_TIERS.forEach(t=>{
+    const sec=el(`<div class="tier"><div class="tier-h">
+      <span class="dot" style="background:${t.color}"></span>
+      <span class="tn" style="color:${t.color}">${t.tier}</span>
+      <span class="td">${t.desc}</span></div><div class="tlist"></div></div>`);
+    const list=sec.querySelector('.tlist');
+    t.clubs.forEach((c,i)=>{
+      const chips=c.chips.map(([cls,txt])=>`<span class="chip ${cls}">${txt}</span>`).join("");
+      list.appendChild(el(`<div class="club">
+        <span class="rank">${i+1}</span>
+        <div class="gauge" style="--v:${c.v};--c:${t.color}"><b>${c.v}</b></div>
+        <div class="cbody"><div class="cn">${c.n}</div><div class="cl">${c.l}</div>
+        <div class="chips">${chips}</div></div></div>`));
+    });
+    host.appendChild(sec);
+  });
+})();
+
+let faFilter="all";
+document.querySelectorAll('[data-fafilter]').forEach(b=>b.addEventListener('click',()=>{
+  document.querySelectorAll('[data-fafilter]').forEach(x=>x.classList.remove('on'));
+  b.classList.add('on'); faFilter=b.dataset.fafilter; renderFA();
+}));
+function renderFA(){
+  const host=document.getElementById('fa-grid'); host.innerHTML="";
+  FA_POOL.filter(f=>faFilter==="all"||f.status===faFilter).forEach(f=>{
+    const preds=f.p.map(p=>`<li><b>${p[0]}</b> — ${p[1]}</li>`).join("");
+    let outcome="";
+    if(f.status==="RESOLVED"){
+      outcome=`<div class="fa-outcome ${f.score>=3?'ok':'part'}">
+        <b>${f.score} pts · ${f.scoreLabel}</b><br>Actual: ${f.actual}</div>`;
+    }
+    host.appendChild(el(`<div class="fa-card">
+      <div class="fa-top"><div><h4>${f.n}</h4><div class="meta">${f.pos} · ${f.last} · wage tier: ${f.tier}</div></div>
+        <span class="st ${stLabel[f.status]}">${f.status}</span></div>
+      <div class="fa-sec"><div class="lb">NEXUS Prediction · locked 2026-08-16</div>
+        <div class="pred"><div class="p-league">Predicted league: ${f.pl} <span style="color:var(--ink-faint);font-weight:600;">· NMI ${f.conf}</span></div>
+        <ol>${preds}</ol></div></div>
+      ${outcome}
+      <div class="fa-foot"><span>${f.note||""}</span></div></div>`));
+  });
+}
+renderFA();
+
+(function(){
+  const pct=Math.round(gained/(resolved.length*3)*100);
+  document.getElementById('acc-pct').textContent=pct+"%";
+  const cats=[["Club Hit (3 pts)",resolved.filter(f=>f.score===3).length,"var(--green)"],
+              ["League Hit (2 pts)",resolved.filter(f=>f.score===2).length,"var(--blue)"],
+              ["Adjacent (1 pt)",resolved.filter(f=>f.score===1).length,"var(--gold)"],
+              ["Miss (0 pts)",resolved.filter(f=>f.score===0).length,"#4a5a78"]];
+  const max=Math.max(1,...cats.map(c=>c[1]));
+  const host=document.getElementById('acc-bars');
+  cats.forEach(([lbl,v,col])=>{
+    host.appendChild(el(`<div class="accbar-row"><span class="lbl">${lbl}</span>
+      <span class="accbar"><span style="width:${v/max*100}%;background:${col};opacity:${v?1:.15}"></span></span>
+      <span class="val">${v}</span></div>`));
+  });
+  const log=document.getElementById('resolved-log');
+  resolved.forEach(f=>{
+    log.appendChild(el(`<div class="club-row">
+      <div class="nm">${f.n}<small>${f.pos}</small></div>
+      <div class="why">Predicted: ${f.p[0][0]} (${f.pl}) → Actual: ${f.actual}</div>
+      <div class="stcol"><span class="st ${f.score>=3?'resolved':'warm'}">${f.score} pts</span></div></div>`));
+  });
+})();
+
+const tip=document.getElementById('tooltip');
+document.addEventListener('mousemove',e=>{
+  const t=e.target.closest('[data-tip]');
+  if(t){tip.style.display='block';tip.textContent=t.dataset.tip;
+    tip.style.left=Math.min(e.clientX+14,window.innerWidth-300)+'px';tip.style.top=(e.clientY+14)+'px';}
+  else tip.style.display='none';
+});
+</script>
+</body>
+</html>
