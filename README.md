@@ -7,7 +7,7 @@
 
 [**▶ Live Showcase**](https://gunnerista.github.io/NEXUS/) · [About L&K](#about) · [How it works](#how-it-works)
 
-![Status](https://img.shields.io/badge/status-live-brightgreen) ![Markets](https://img.shields.io/badge/markets_scanned-15-blue) ![Predictions](https://img.shields.io/badge/FA_predictions-locked_%26_scored-orange)
+![Status](https://img.shields.io/badge/status-live-brightgreen) ![Markets](https://img.shields.io/badge/markets_scanned-15-blue) ![Locked](https://img.shields.io/badge/predictions_locked-12-blue) ![Resolved](https://img.shields.io/badge/resolved_%26_scored-2-orange)
 
 <img src="assets/overview.png" width="850" alt="NEXUS Platform overview">
 
@@ -50,7 +50,11 @@ When a tracked player signs, the system grades itself:
 | Adjacent / same-tier market | **1** |
 | Miss | **0** |
 
-First calibration cases: one **exact club hit** (P1 predicted, player signed there days later) and one adjacent-market resolution. The scoreboard only gets more meaningful as the sample grows — that is the point.
+**Sample size, stated first: 2 resolved cases out of 12 locked predictions.**
+
+That is a calibration sample, not a track record, and pretending otherwise would defeat the purpose of building a self-scoring system. The two graded cases so far: one **exact club hit** (P1 predicted, player signed there days later) and one **adjacent-market resolution** (1 pt) — 4 of a possible 6 points.
+
+Read that as evidence the loop runs end to end, not as an accuracy claim. The number becomes a credibility claim at n=20+, not before. Every subsequent case is added whether it scores 3 or 0.
 
 ---
 
@@ -86,10 +90,30 @@ Single self-contained HTML showcase (zero dependencies, GitHub Pages) on top of 
 
 ---
 
+## Work with NEXUS
+
+**A club with an open brief** — send the position, the budget band, and your registration constraints. You get back a dated shortlist of clubs and market conditions relevant to that brief, sources attached, unverified items flagged. No retainer to start the conversation.
+
+**An agency or intermediary with a player to place** — send the profile and the fee structure. Reverse Match returns ranked destinations with the reasoning attached, counterparties anonymized while the deal is live.
+
+**An investor or club owner** — L&K's club M&A and sponsorship desks run on the same evidence-first method shown here.
+
+📧 **ikjunj19@gmail.com** — subject line `NEXUS`, plus one line on the brief, is enough to start.
+
+---
+
+## License
+
+© 2026 L&K Agency. All rights reserved — see [LICENSE](LICENSE).
+
+This repository is a **published showcase, not open source.** The presentation layer may be read and referenced; it may not be copied, redistributed, or reused in a derivative product. Scoring weights, source integrations, and the filter pipeline are neither published nor licensed.
+
+---
+
 ## About
 
 <a name="about"></a>**L&K Agency** is a sports investment and deal-making agency operating across football club M&A, player placement, sponsorship, and esports — Europe, MENA, Asia, and the Americas.
 
 Designed & operated by **Ikjun Jang** · [GitHub](https://github.com/Gunnerista) · ikjunj19@gmail.com
 
-<sub>© 2026 L&K Agency. Showcase data is compiled from public sources and anonymized where deals are active. Engine internals are proprietary.</sub>
+<sub>© 2026 L&K Agency. Showcase data is compiled from public sources. Club identities in live deal cases are anonymized. Players listed in the FA tracker are publicly unattached free agents; entries describe market conditions and reported interest only — NEXUS does not publish medical, disciplinary, or character assessments of named individuals. Engine internals are proprietary.</sub>

@@ -178,12 +178,12 @@
       <div class="tile"><div class="k">Markets Scanned</div><div class="v">15</div><div class="s">League boards · scanned 2026-08-06</div></div>
       <div class="tile hl"><div class="k">Live Targets</div><div class="v" id="tile-hot">—</div><div class="s">Clubs with verified demand</div></div>
       <div class="tile"><div class="k">FA Pool Tracked</div><div class="v" id="tile-fa">—</div><div class="s">Predictions locked 2026-08-16</div></div>
-      <div class="tile grn"><div class="k">Calibration Score</div><div class="v" id="tile-acc">—</div><div class="s">Resolved cases graded</div></div>
+      <div class="tile grn"><div class="k">Calibration Score</div><div class="v" id="tile-acc">—</div><div class="s" id="tile-acc-sub">Resolved cases graded</div></div>
     </div>
 
     <div class="verdict">
       <div class="vt">Sample Market Intel · 2026-08-16</div>
-      <p><b>Aris Thessaloniki lost both of its centre back candidates in one week</b> — one hijacked by a Cypriot club at the medical stage (Aug 11), the other drawn to the Gulf. A month-old left footed CB brief remains unfilled with a cup registration deadline days away. NEXUS flags exactly this kind of window: verified demand, broken pipeline, urgent clock.</p>
+      <p><b>Aris Thessaloniki lost both of its centre back candidates in one week</b> — one signed by a Cypriot club late in the process (Aug 11), the other drawn to the Gulf. A month-old left footed CB brief remains unfilled with a cup registration deadline days away. NEXUS flags exactly this kind of window: verified demand, broken pipeline, urgent clock.</p>
     </div>
 
     <div class="panel">
@@ -236,7 +236,7 @@
   <div class="view" id="view-accuracy">
     <p class="kicker">System Accuracy</p>
     <h1 class="big" style="font-size:28px;">The scoreboard</h1>
-    <p class="lede">Only resolved cases count. Predictions are locked before resolution and never retro edited — otherwise accuracy means nothing. Two calibration cases below were graded against signal reads dated before the players signed.</p>
+    <p class="lede"><b style="color:var(--ink)">Sample size first: <span id="acc-n">—</span> resolved cases out of <span id="acc-n3">—</span> locked predictions.</b> That is a calibration sample, not a track record, and it is stated here so the number below is read correctly. Only resolved cases count. Predictions are locked before resolution and never retro edited — otherwise accuracy means nothing.</p>
 
     <div class="rubric">
       <div class="rub"><div class="pts" style="color:var(--green)">3 pts</div><div class="nm2">Club Hit</div><div class="ds">Actual club was in the predicted top 3</div></div>
@@ -247,7 +247,7 @@
 
     <div class="panel">
       <h3>Calibration Score<span class="tag">Resolved cases</span></h3>
-      <div class="hero-num"><span class="n" id="acc-pct">—</span><span class="d">Average score rate across resolved cases (points earned / points possible). As the sample grows, this number becomes the system's credibility.</span></div>
+      <div class="hero-num"><span class="n" id="acc-pct">—</span><span class="d">Points earned / points possible across <b><span id="acc-n2">—</span> resolved cases</b>. At this sample size the rate is indicative only — it becomes a credibility claim at n=20+, not before. Every future case is added whether it scores 3 or 0.</span></div>
       <div id="acc-bars" style="margin-top:16px;"></div>
     </div>
 
@@ -267,6 +267,9 @@
     <div class="ct"><b>Proprietary engine.</b> Data sources, scoring weights, and the filter pipeline are L&K Agency intellectual property. This showcase displays match results and reasoning only. Club identities in live deal cases are anonymized.</div>
   </div>
 
+  <div class="conf" style="margin-top:22px;">
+    <div class="ct"><b>Have an open brief, or a player to place?</b> Send the position, the budget band, and the deadline — you get a dated shortlist of clubs with verified demand back, no obligation. <b>ikjunj19@gmail.com</b></div>
+  </div>
   <footer>
     <span class="lg">NEXUS</span>
     <span>Platform v1.0 · Designed & operated by Ikjun Jang · © 2026 L&K Agency</span>
@@ -287,7 +290,7 @@ const LEAGUES = [
    {n:"Konyaspor", d:"Süper Lig", s:"DEAD", w:"Signed an ex Ligue 1 CB (~€500K) around Jul 30. Need closed.", v:""}
  ]},
  {id:"gr", name:"Greece Super League", close:"2026-09-15", rule:"7 non EU (23+) registered · 5 on the field", clubs:[
-   {n:"Aris Thessaloniki", d:"Super League", s:"HOT", w:"Left footed CB brief unfilled for a month. Lost both lead candidates in one week (one hijacked at the medical, one to the Gulf). Cup registration deadline Aug 17–19.", v:"non EU slots"},
+   {n:"Aris Thessaloniki", d:"Super League", s:"HOT", w:"Left footed CB brief unfilled for a month. Lost both lead candidates in one week (one lost late in the process, one to the Gulf). Cup registration deadline Aug 17–19.", v:"non EU slots"},
    {n:"OFI Crete", d:"Super League", s:"DEAD", w:"Filled the exact left footed CB slot via a Serie B loan on Jul 27.", v:""},
    {n:"Atromitos", d:"Super League", s:"DEAD", w:"Signed its left footed CB to 2028 on Jul 14.", v:""}
  ]},
@@ -303,7 +306,7 @@ const LEAGUES = [
    {n:"Universitatea Craiova", d:"Liga 1", s:"HOT", w:"Defensive crisis after losing a CB; sent an official offer for a Dinamo Kyiv CB on the morning of Aug 4 and is running multiple CB tracks. Actively spending this week.", v:""}
  ]},
  {id:"cy", name:"Cyprus First Division", close:"2026-09-15", rule:"No non EU registration burden", clubs:[
-   {n:"Omonoia Nicosia", d:"First Division", s:"DEAD", w:"Solved its urgent CB need on Aug 11 by hijacking a rival's free agent target at the medical stage.", v:""},
+   {n:"Omonoia Nicosia", d:"First Division", s:"DEAD", w:"Solved its urgent CB need on Aug 11 by moving late on a free agent target a rival had been tracking.", v:""},
    {n:"Apollon Limassol", d:"First Division", s:"WARM", w:"June report of a stopper search; no signing confirmed since, but signal is stale.", v:"recent signings"}
  ]},
  {id:"rs", name:"Serbia SuperLiga", close:"2026-09-18", rule:"Generous foreign registration", clubs:[
@@ -311,7 +314,7 @@ const LEAGUES = [
    {n:"Partizan", d:"SuperLiga", s:"DEAD", w:"Stated priorities are defensive midfield and attack.", v:""}
  ]},
  {id:"be", name:"Belgium Pro League", close:"2026-09-01", rule:"Non EU minimum gross salary (~€100K, verify)", clubs:[
-   {n:"Lommel SK", d:"Challenger (CFG)", s:"DEAD", w:"Starting CB ruptured an ACL; signed a free agent replacement Aug 3. Need closed.", v:""},
+   {n:"Lommel SK", d:"Challenger (CFG)", s:"DEAD", w:"Starting CB out long term; signed a free agent replacement Aug 3. Need closed.", v:""},
    {n:"Club Brugge", d:"Pro League", s:"WARM", w:"CB out with a metatarsal fracture; leadership searching for one or two CBs, but the bar is UCL level — depth buy only.", v:""}
  ]},
  {id:"dk", name:"Denmark Superliga", close:"2026-09-01", rule:"Work permit salary test for non EU", clubs:[
@@ -372,21 +375,21 @@ const FA_POOL = [
   conf:72, note:"Resolves instantly if the Kalba rumour confirms"},
  {n:"Bamba Dieng", pos:"CF · 26 · Senegal", last:"Lorient (FRA) · expired Jul 2026", tier:"mid-high", status:"TRACKING",
   pl:"EFL Championship", p:[["Hull City","talks reported Jul 30"],["Middlesbrough","parallel contact"],["Süper Lig club","abandoned deal could revive"]],
-  conf:55, note:"Turned down bigger Saudi money — England intent"},
+  conf:55, note:"Press reports point to England over higher paying Gulf options"},
  {n:"Diogo Leite", pos:"CB (left) · 27 · Portugal", last:"Union Berlin (GER) · expired Jun 2026", tier:"high", status:"TRACKING",
   pl:"Premier League", p:[["Leeds United","reported to be pushing hard"],["Beşiktaş","parallel track"],["Schalke 04","real link despite 2.Bundesliga"]],
   conf:58, note:"Left footed CB scarcity = fast resolution expected"},
  {n:"Yves Bissouma", pos:"DM · 29 · Mali", last:"Tottenham (ENG) · expired Jun 2026", tier:"high", status:"TRACKING",
-  pl:"Premier League", p:[["Fulham","training with the squad"],["Benfica","head coach connection"],["Süper Lig club","if he accepts the wage cut"]],
-  conf:52, note:"Off field record suppresses his market"},
+  pl:"Premier League", p:[["Fulham","training with the squad"],["Benfica","head coach connection"],["Süper Lig club","subject to wage terms"]],
+  conf:52, note:"Reported interest is narrower than his league level would imply"},
  {n:"Krépin Diatta", pos:"RB/RW · 27 · Senegal", last:"AS Monaco (FRA) · summer 2026", tier:"high", status:"TRACKING",
   pl:"Premier League", p:[["Everton","in the race per Aug 6 report"],["Marseille","approach confirmed"],["Ipswich Town","competing"]],
-  conf:50, note:"Knee history = medical variable"},
+  conf:50, note:"Three clubs linked — resolution set by whichever moves first"},
  {n:"Anthony Martial", pos:"FW · 30 · France", last:"Monterrey (MEX) · terminated Jul 2026", tier:"high", status:"TRACKING",
   pl:"La Liga", p:[["Real Betis","back on their radar"],["Ligue 1 mid table","homecoming narrative"],["MLS club","wildcard"]],
-  conf:48, note:"Attitude and injury discount priced in"},
+  conf:48, note:"Candidate destinations span three markets — widest spread in the pool"},
  {n:"Jarosław Niezgoda", pos:"ST · 31 · Poland", last:"Pogoń Siedlce (POL 2) · expired Jun 2026", tier:"low", status:"TRACKING",
-  pl:"Poland (1st/2nd tier)", p:[["Remains unsigned at window close","zero goals since ACL = weakest signals in pool"],["1 Liga club","low cost gamble demand"],["Bottom half Ekstraklasa","name value bet"]],
+  pl:"Poland (1st/2nd tier)", p:[["Remains unsigned at window close","lowest volume of reported interest in the pool"],["1 Liga club","low cost gamble demand"],["Bottom half Ekstraklasa","name value bet"]],
   conf:60, note:"Control case — a negative prediction"},
  {n:"Ryotaro Ito", pos:"AM · 28 · Japan", last:"Sint-Truiden (BEL) · left Jun 2026", tier:"mid", status:"TRACKING",
   pl:"J1 League", p:[["Urawa Reds","former club, waiting on offers per press"],["Albirex Niigata","homecoming story"],["Belgian mid table","if he stays in Europe"]],
@@ -400,7 +403,7 @@ const FA_POOL = [
  {n:"Ľubomír Šatka", pos:"CB · 30 · Slovakia", last:"Samsunspor (TUR) · expired Jun 2026", tier:"mid", status:"RESOLVED",
   pl:"Greece Super League", p:[["Aris Thessaloniki","personal terms reported Jul 30"],["Other Greek SL","market fit"],["Cypriot top club","adjacent market"]],
   conf:70, actual:"Omonoia Nicosia (Cyprus) · signed 2026-08-11", score:1, scoreLabel:"Adjacent · neighbouring market (P3 direction)",
-  note:"Calibration: hijacked at the medical stage"},
+  note:"Calibration: a competing club entered late in the process"},
  {n:"Shawn Adewoye", pos:"CB · 26 · Belgium", last:"Fortuna Sittard (NED) · expired 2026", tier:"mid", status:"RESOLVED",
   pl:"Belgium", p:[["Lommel SK","talks confirmed Jul 30"],["Other Belgian club","market fit"],["Eredivisie return","backup scenario"]],
   conf:75, actual:"Lommel SK (Belgium) · signed 2026-08-03", score:3, scoreLabel:"Club Hit · P1 exactly right",
@@ -424,6 +427,10 @@ document.getElementById('tile-fa').textContent=FA_POOL.length;
 const resolved=FA_POOL.filter(f=>f.status==="RESOLVED");
 const gained=resolved.reduce((a,f)=>a+f.score,0);
 document.getElementById('tile-acc').innerHTML=gained+"<small>/"+(resolved.length*3)+"pt</small>";
+document.getElementById('tile-acc-sub').textContent=resolved.length+" of "+FA_POOL.length+" resolved · calibration stage";
+document.getElementById('acc-n').textContent=resolved.length;
+document.getElementById('acc-n2').textContent=resolved.length;
+document.getElementById('acc-n3').textContent=FA_POOL.length;
 document.getElementById('cnt-lg').textContent=LEAGUES.length;
 document.getElementById('cnt-fa').textContent=FA_POOL.length;
 
