@@ -1,0 +1,1 @@
+Public showcase repo. Before every push: run the leak check grep (client names, contact names, deal terms, real player and club names in the ledger). Ledger players must stay anonymized as Case A, B, C with position and age only. Never commit engine code, prompts, gate thresholds, weights, the scouting database, or _shots.py.
