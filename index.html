@@ -250,7 +250,7 @@ footer p{margin:0 0 6px;max-width:92ch}
 
 <div class="facts" role="list">
   <div class="fact" role="listitem"><b>12</b><span>free agent destinations predicted and locked on 16 Aug 2026. Never edited since.</span></div>
-  <div class="fact" role="listitem"><b>11 / 30</b><span>points scored on the 10 that resolved. Every miss stays on the board.</span></div>
+  <div class="fact" role="listitem"><b>7 / 30</b><span>points on the 10 that resolved, under a scoring rule we tightened ourselves.</span></div>
   <div class="fact" role="listitem"><b>192</b><span>players in the private inventory, each with a status and a deal trail.</span></div>
   <div class="fact" role="listitem"><b>Mondays</b><span>an autonomous scan rescores the open predictions without anyone asking.</span></div>
 </div>
@@ -371,8 +371,9 @@ footer p{margin:0 0 6px;max-width:92ch}
     <h2>The ledger.</h2>
     <p class="dim">Twelve unattached free agents. Destination league and top three clubs predicted and locked on 16 August 2026. Scored as each one signed. Players are shown by position and age only.</p>
   </div>
-  <div class="score"><b>37%</b><span>11 of 30 possible points across 10 resolved cases. One void, one still open. A calibration sample, not a track record. It becomes a claim at twenty cases, not before.</span></div>
-  <p class="scale">Scoring: exact club in the top three, 3 points. Right league, 2. Neighbouring market, 1. Miss, 0. A correct "stays unsigned" call counts as an exact hit.</p>
+  <div class="score"><b>23%</b><span>7 of 30 possible points across 10 resolved cases. One void, one still open. A calibration sample, not a track record. It becomes a claim at twenty cases, not before.</span></div>
+  <p class="scale">Scoring: exact club in the top three, 3 points. Right league, 2. Same country, one division away, 1. Anything else, 0. A correct "stays unsigned" call counts as an exact hit.</p>
+  <p class="scale"><strong style="color:var(--ink);font-weight:600">Rescored on 5 October 2026.</strong> Our first rule gave a point for any "comparable market", which scored a Premier League call that ended in Serie A as a near miss. That was too generous. Under the old rule this ledger read 11 of 30 (37%). We tightened it ourselves and kept both numbers on the page.</p>
   <div class="table-wrap">
     <table>
       <thead><tr><th>Case</th><th>Locked prediction</th><th>What happened</th><th>Points</th></tr></thead>
@@ -443,10 +444,10 @@ footer p{margin:0 0 6px;max-width:92ch}
   var L = [
     ["Case A","CB, 26","Belgian Pro League, first choice club named","Signed with the first choice club, Aug",3],
     ["Case B","ST, 31","Stays unsigned through the window","Unsigned at window close",3],
-    ["Case C","CB, 30","Greek Super League","Signed in Cyprus, Aug",1],
-    ["Case D","CB, 27","Premier League","Signed in Serie A, Sep",1],
-    ["Case E","CM, 29","Saudi Pro League","Signed in Serie A, Aug",1],
-    ["Case F","DM, 29","Premier League","Signed in the Eredivisie, Sep",1],
+    ["Case C","CB, 30","Greek Super League","Signed in Cyprus, Aug",0],
+    ["Case D","CB, 27","Premier League","Signed in Serie A, Sep",0],
+    ["Case E","CM, 29","Saudi Pro League","Signed in Serie A, Aug",0],
+    ["Case F","DM, 29","Premier League","Signed in the Eredivisie, Sep",0],
     ["Case G","RB, 27","Premier League","Signed in the Championship, Oct",1],
     ["Case H","CF, 26","Championship","Signed in Serbia, Aug, after a failed medical elsewhere",0],
     ["Case I","AM, 28","J1 League","Reported move to the Championship, Sep",0],

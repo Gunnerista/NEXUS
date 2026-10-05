@@ -1,87 +1,90 @@
-<div align="center">
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="assets/banner-dark.png">
+  <img src="assets/banner-light.png" alt="NEXUS by L&K Agency. A transfer desk that publishes its own misses." width="100%">
+</picture>
 
-# NEXUS
+<p align="center">
+  <a href="https://gunnerista.github.io/NEXUS/"><b>Open the live showcase</b></a>
+  &nbsp;&nbsp;|&nbsp;&nbsp;
+  <a href="#the-ledger">Ledger</a>
+  &nbsp;&nbsp;|&nbsp;&nbsp;
+  <a href="#rules-written-by-misses">Rules</a>
+  &nbsp;&nbsp;|&nbsp;&nbsp;
+  <a href="#work-with-lk">Contact</a>
+</p>
 
-**A transfer desk that publishes its own misses.**
-*Agent-first transfer intelligence, built and operated by L&K Agency.*
+## The question
 
-[**Open the live showcase**](https://gunnerista.github.io/NEXUS/)
-
-![Locked](https://img.shields.io/badge/predictions_locked-12-2a4a39) ![Resolved](https://img.shields.io/badge/resolved-10-2a4a39) ![Score](https://img.shields.io/badge/ledger_score-11%2F30_(37%25)-ebcb45) ![Updated](https://img.shields.io/badge/updated-2026--10--05-2a4a39)
-
-<img src="assets/hero.png" width="900" alt="NEXUS showcase: a club brief traced through five gates to a sealed shortlist">
-
-</div>
-
----
-
-## The question NEXUS answers
-
-Scouting platforms tell you how good a player is. An agent gets paid for something else:
+Scouting platforms rate players. An agent gets paid for a different answer:
 
 > **Which club, right now, will actually sign this player, and why?**
 
-NEXUS answers that in both directions, with one agent running it alongside a team of AI analysts. Every prediction it makes is locked before the outcome and scored in public, misses included.
+NEXUS answers it in both directions. One agent runs it with a team of AI analysts, and every prediction is locked before the outcome and scored in public.
 
-## Two engines
+| Engine | Input | Output |
+|---|---|---|
+| **Demand Match** | A club brief: position, budget band, deadline | Ten verified players, each with the reason it fits and the first line of the pitch |
+| **Reverse Match** | A player profile | Ranked destination clubs, tiered into contact now, follow up, monitor |
 
-**Demand Match.** Club brief in, ten verified players out. Each brief starts from zero: full open market research, five gates, then every surviving name is checked on Transfermarkt before it leaves the desk. Each pick ships with why it fits and the first sentence of the pitch.
+It is built for the long tail (Balkan and Eastern European top flights, the Gulf, K League, USL), where free agents move on modest wages and no clean database exists. That is why NEXUS reasons like an agent instead of querying like a database.
 
-**Reverse Match.** Player profile in, ranked destination clubs out, tiered into contact now, follow up, and monitor. Evidence on every rank, Verify flags on anything unconfirmed, counterparties anonymous while a deal is live.
+## How a brief moves
 
-Both are built for the long tail of the market (Balkan and Eastern European top flights, the Gulf, K League, USL) where free agents move on modest wages and no clean database exists. That is why NEXUS reasons like an agent instead of querying like a database.
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="assets/pipeline-dark.png">
+  <img src="assets/pipeline-light.png" alt="Club brief, agent research, five gates, Transfermarkt check, human sign off, shortlist" width="100%">
+</picture>
 
-## Five gates
-
-<img src="assets/gates.png" width="900" alt="The five gates">
-
-Tier realism, player motive, buying pattern, mobility this window, year one budget. The questions are public. The thresholds are sealed.
-
-## Rules written by misses
-
-<img src="assets/rules.png" width="900" alt="Operating rules and the cases that produced them">
-
-Every rule in the system traces back to a specific failure, then gets loaded into every session after it. A loud emergency is not a buyer. The first sentence of outreach is their problem, not our player. A deadline only works on someone who already wants the player. Lock it, date it, never touch it.
-
-## How one person runs the desk
-
-<img src="assets/desk.png" width="900" alt="The operating pipeline and decision authority split">
-
-AI agents read, verify and draft. A human owns every relationship and approves every word that reaches a club. Each engine is a codified, versioned playbook. A scheduled agent rescans open predictions every Monday. Lessons persist between sessions in structured memory; client data never leaves one local disk.
+The questions behind each gate are public. The thresholds, weights, playbooks and source pipeline are not.
 
 ## The ledger
 
-<img src="assets/ledger.png" width="900" alt="Prediction ledger">
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="assets/ledger-dark.png">
+  <img src="assets/ledger-light.png" alt="Prediction ledger: 23 percent, 7 of 30 points across 10 resolved cases" width="100%">
+</picture>
 
-Twelve unattached free agents, destinations locked on 16 August 2026. Ten resolved, 11 of 30 points, one void, one open. Players are anonymized to position, age and market. Scoring: exact club in the top three 3, right league 2, neighbouring market 1, miss 0.
+Twelve unattached free agents, destinations locked on 16 August 2026 and never edited. On 5 October we tightened our own scoring rule: a point for a "comparable market" became a point only for the same country, one division away. The score fell from 37% to 23%. Both numbers stay public, because a ledger that flatters itself is just marketing.
 
-That is a calibration sample, not a track record. It becomes a claim at twenty cases. Every new case is added whether it scores 3 or 0.
+Ten cases is a calibration sample, not a track record. It becomes a claim at twenty.
 
-## What is published, and what is not
+## Rules written by misses
+
+Every rule in the system traces back to a specific failure and is loaded into every session after it.
+
+| Rule | Where it came from |
+|---|---|
+| **A loud emergency is not a buyer.** | The club with the biggest injury headline had never heard of our player. The buyer had quietly freed a slot eight days earlier. |
+| **The first sentence is their problem, not our player.** | Directors skim dozens of agent messages a day. A confirmed need gets read. "I have a player" does not. |
+| **A deadline only works on someone who already wants the player.** | A clock set before intent was confirmed got a same day no. |
+| **Lock it, date it, never touch it.** | Predictions freeze at the lock. Pre signed cases are voided, not counted. |
+| **One case, one session.** | Each brief opens a clean workspace so no deal leaks into another. |
+
+## How one person runs the desk
+
+AI agents read, verify and draft. A human owns every relationship and approves every word that reaches a club. Each engine is a written, versioned playbook. A scheduled agent rescores open predictions every Monday. Client data, salaries and contact history live on one local disk and never in a repository.
+
+## What this repository is
 
 | Published | Sealed |
 |---|---|
 | Architecture and gate order | Gate thresholds and ranking weights |
-| Operating rules and their origin cases | Agent playbooks and prompts |
-| The full prediction ledger | Source pipeline |
+| Operating rules and their origins | Agent playbooks and prompts |
+| The full ledger, rescoring included | Source pipeline |
 | The AI and human authority split | Player inventory, agreements, contacts |
 
-This repository contains the showcase only. There is no engine code here.
+This repository holds the showcase only. There is no engine code here.
 
 ## Work with L&K
 
-**A club with an open position:** send the position, budget band and registration limits. You get a dated shortlist with sources and flags.
-**A player or intermediary:** send the profile and fee situation. Reverse Match returns ranked destinations with reasoning.
-**An investor or owner:** L&K's club M&A and sponsorship desks run on the same method.
+| You are | Send | You get |
+|---|---|---|
+| A club | Position, budget band, registration limits | A dated, sourced shortlist with Verify flags |
+| A player or intermediary | Profile and fee situation | Ranked destinations with the reasoning attached |
+| An investor or owner | The opportunity | L&K's M&A and sponsorship desks, same method |
 
-📧 **ikjunj19@gmail.com**, subject `NEXUS`
+📧 **ikjunj19@gmail.com** with subject `NEXUS`
 
 ---
 
-## License
-
-© 2026 L&K Agency. All rights reserved. See [LICENSE](LICENSE).
-
-This is a published showcase, not open source. It may be read and linked. It may not be copied, redistributed or reused in a derivative product.
-
-<sub>Designed and operated by **Ikjun Jang**, Director, L&K Agency (Seoul and New York). Ledger players are anonymized to position, age and market. Clubs in live deals are never named.</sub>
+<sub>© 2026 L&K Agency. All rights reserved. A published showcase, not open source: it may be read and linked, not copied, redistributed or reused in a derivative product. See <a href="LICENSE">LICENSE</a>. Ledger players are anonymized to position, age and market. Designed and operated by Ikjun Jang, Director, L&K Agency, Seoul and New York.</sub>
