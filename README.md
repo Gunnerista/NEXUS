@@ -62,7 +62,7 @@ Every rule in the system traces back to a specific failure and is loaded into ev
 
 ## How one person runs the desk
 
-AI agents read, verify and draft. A human owns every relationship and approves every word that reaches a club. Each engine is a written, versioned playbook. A scheduled agent rescores open predictions every Monday. Client data, salaries and contact history live on one local disk and never in a repository.
+AI agents read, verify and draft. A human owns every relationship and approves every word that reaches a club. Each engine is a written, versioned playbook. Open cases are rescored by hand as they resolve. Client data, salaries and contact history live on one local disk and never in a repository.
 
 ## What this repository is
 
